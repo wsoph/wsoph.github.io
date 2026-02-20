@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sophie's IT World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       STICKY NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Sophie's IT World</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="aboutme.html" class="nav-link">About</a>
+      <a href="blogs.html" class="nav-link">Blogs</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════
+         HERO — UPPER HALF
+    ═══════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1 class="hero-name">Hey, I'm Sophie</h1>
+        <p class="hero-role">Azure Technical Support Engineer &amp; AI Enthusiast</p>
+        <p class="hero-bio">
+           I'm an Azure Technical Support Engineer and AI enthusiast. On this blog, I deep-dive into real-world Azure troubleshooting case studies and share custom AI solutions I build to streamline workflows for teams and individuals.
+        </p>
+        <div class="hero-actions">
+          <a href="blogs.html" class="btn-primary">Read the Blog</a>
+          <a href="aboutme.html" class="btn-secondary">About Me</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap">
+        <img
+          src="sophie_profile.jpg"
+          alt="Sophie's profile photo"
+          class="hero-photo"
+        />
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FEEDS — LOWER HALF
+    ═══════════════════════════════════════════ -->
+    <section class="feeds">
+      <div class="feeds-inner">
+
+        <div class="feed-column" id="ai-feed">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="feed-column" id="azure-feed">
+          <!-- Populated by JS -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Sophie's IT World. Built with HTML, CSS &amp; JavaScript.</p>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       POST DATA + RENDER ENGINE
+       ─────────────────────────────────────────
+       To add a new post, append an object to the
+       `posts` array below. The page re-renders
+       automatically on every page load.
+
+       category values: "AI" | "Azure"
+  ═══════════════════════════════════════════ -->
+  <script>
+    // ── DATA ────────────────────────────────────
+    const posts = [
+      // AI Implementation posts (newest first)
+      {
+        title: "Building a Multi-Agent Orchestration System with Azure AI Foundry",
+        category: "AI",
+        url: "#",
+        date: "Feb 15, 2026"
+      },
+      {
+        title: "How I Built a RAG Pipeline Using Azure AI Search and GPT-4o",
+        category: "AI",
+        url: "#",
+        date: "Jan 28, 2026"
+      },
+      {
+        title: "Deploying a Semantic Kernel Agent as an Azure Function",
+        category: "AI",
+        url: "#",
+        date: "Jan 10, 2026"
+      },
+      {
+        title: "Prompt Engineering Patterns for Enterprise Copilot Solutions",
+        category: "AI",
+        url: "#",
+        date: "Dec 22, 2025"
+      },
+
+      // Azure Technology posts (newest first)
+      {
+        title: "Troubleshooting Azure OpenAI 429 Throttling in Production",
+        category: "Azure",
+        url: "#",
+        date: "Feb 12, 2026"
+      },
+      {
+        title: "Diagnosing Azure App Service Connectivity Failures with Network Watcher",
+        category: "Azure",
+        url: "#",
+        date: "Jan 20, 2026"
+      },
+      {
+        title: "Case Study: Resolving Azure SQL Deadlocks in a High-Traffic API",
+        category: "Azure",
+        url: "#",
+        date: "Jan 05, 2026"
+      },
+      {
+        title: "Azure Key Vault Access Policy vs RBAC — A Deep Dive",
+        category: "Azure",
+        url: "#",
+        date: "Dec 18, 2025"
+      }
+    ];
+
+    // ── RENDERER ────────────────────────────────
+    function renderFeed(containerId, category, heading, blogsPage) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const filtered = posts.filter(p => p.category === category);
+      const recent   = filtered.slice(0, 3);
+
+      const rows = recent.map(post => `
+        <li class="feed-item">
+          <span class="feed-date">${post.date}</span>
+          <a href="${post.url}" class="feed-title">${post.title}</a>
+        </li>
+      `).join('');
+
+      container.innerHTML = `
+        <h2 class="feed-heading">${heading}</h2>
+        <p class="feed-subheading">${category === 'AI' ? 'Agents, skills &amp; custom solutions.' : 'Real-world troubleshooting &amp; cloud architecture.'}</p>
+        <ul class="feed-list">
+          ${rows}
+        </ul>
+        <a href="${blogsPage}" class="feed-more">Read More &rarr;</a>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFeed('ai-feed',    'AI',    'AI Implementation', 'blogs.html');
+      renderFeed('azure-feed', 'Azure', 'Azure Technology',  'blogs.html');
+
+      // Set footer year dynamically
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    });
+  </script>
+
+</body>
+</html>
